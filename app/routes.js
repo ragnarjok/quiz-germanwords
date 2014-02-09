@@ -1,23 +1,30 @@
 var Word = require('./models/word');
+// helper for parsing words from the wiki page
 var helper = require('./helper');
+// possible count of forms
+var formsCountLimit = 3;
+// page in wikipedia
+var urlWiki = "http://de.wikipedia.org/wiki/Liste_starker_Verben_(deutsche_Sprache)";
+
 module.exports = function(app) {
+	// gets random word
 	app.get('/api/word', function(req, res) {
 		Word.random(function(err, word){
 			console.log (err);
 			console.log (word);
-			if (err)
+			if (err) {
 				res.send (err);
-			// there are possibly 3 forms to check, so:
-			var ind = Math.floor((Math.random()*3));
-            word.currentForm = ind;  
+			}
+			var ind = Math.floor((Math.random() * formsCountLimit));
+			word.currentForm = ind;  
 			word.forms[ind] = "";
 			res.json(word);
 		} )
-    });
+	});
 
-	//
+	// checks whether user gave correct answer or not
 	app.post('/api/word', function(req, res){
-		Word.findOne({ infinitive: req.body.infinitive }, function(err, word) {
+		Word.findOne({ _id: req.body.infinitive }, function(err, word) {
 			if (err)
 				res.send (err);
 			console.log(req);
@@ -36,17 +43,18 @@ module.exports = function(app) {
 	});
 
 	app.post('/api/fill_database', function (req, res) {
-		helper.parse("http://de.wikipedia.org/wiki/Liste_starker_Verben_(deutsche_Sprache)", function(data) {
-			Word.create({
-				infinitive : data.infinitive,
-				forms: data.forms
-			});
+		helper.parse(urlWiki, function(data) {
+			Word.update({ _id : data.infinitive },
+				{ $set: { forms: data.forms }},
+				{ upsert: true }
+			);
 		});		
 		res.send();
 	});
 
 	// application -------------------------------------------------------------
 	app.get('*', function(req, res) {
+		
 	    res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
 	});
 };

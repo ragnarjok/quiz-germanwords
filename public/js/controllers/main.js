@@ -11,6 +11,7 @@ angular.module('wordController', [])
 				$scope.word = data;
 			});
 
+
 		// CREATE ==================================================================
 		// when submitting the add form, send the text to the node API
 		$scope.submitWord = function() {
@@ -19,7 +20,7 @@ angular.module('wordController', [])
 			// if form is empty, nothing will happen
 			if (!$.isEmptyObject($scope.word.userAnswer)) {
 
-				// call the create function from our service (returns a promise object)
+				// call the comparison function from our service (returns a promise object)
 				Word.submit($scope.word)
 
 					.success(function(data) {

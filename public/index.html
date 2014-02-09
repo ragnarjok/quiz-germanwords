@@ -10,7 +10,6 @@
 	<title>Node/Angular QUIZ</title>
 
 	<!-- SCROLLS -->
-	<link href="css/xeditable.css" rel="stylesheet">
 	<style>
 		html 					{ overflow-y:scroll; }
 		body 					{ padding-top:50px; }
@@ -32,9 +31,9 @@
 		<!-- FORM  -->
 		<div id="word-form" class="row">
 			<div class="col-sm-8 col-sm-offset-2 text-center">
-				<form editable-form>
+				<form>
 					<div class="form-group">
-					 <label ><b>{{ word.infinitive }} </b></label> <br>
+					 <label ><b>{{ word._id }} </b></label> <br>
 					 <label >{{ word.forms[0] || "______" }} </label> <br>
 					 <label >{{ word.forms[1] || "______" }} </label> <br>
 					 <label >{{ word.forms[2] || "______" }} </label> <br>
@@ -43,7 +42,6 @@
                      <button type="submit" class="btn btn-primary btn-lg" ng-click="submitWord()">Submit</button>
 					 <button type="submit" class="btn btn-primary btn-lg" ng-click="fillDatabase()">Fill database</button>
 				</form>
-
 			</div>
 		</div>
 	</div>

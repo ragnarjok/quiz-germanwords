@@ -1,12 +1,13 @@
 var mongoose = require('mongoose');
 
 WordSchema = new mongoose.Schema({
-	infinitive: String,
+	// Infinitive form is set to be Index in the schema
+  _id : String,
 	forms : [String],
 	currentForm: { type: Number, default: 0 },
 	userAnswer: { type: String, default: '' },
 	lastResult: { type:Boolean, default: true },
-    score : { type: Number, default: 0 }
+  score : { type: Number, default: 0 }
 });
 
 WordSchema.statics.random = function(callback) {

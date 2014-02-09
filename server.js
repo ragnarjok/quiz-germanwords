@@ -15,7 +15,6 @@ app.configure(function() {
 	app.use(express.methodOverride()); 						// simulate DELETE and PUT
 });
 
-require('./app/helper.js');
 // routes ======================================================================
 require('./app/routes.js')(app);
 

@@ -1,1 +1,1 @@
-angular.module('quiz', ['wordController', 'wordService', 'xeditable']);
+angular.module('quiz', ['wordController', 'wordService']);

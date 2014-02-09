@@ -1,0 +1,51 @@
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="quiz">
+<head>
+	<!-- META -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+	<title>Node/Angular QUIZ</title>
+
+	<!-- SCROLLS -->
+	<link href="css/xeditable.css" rel="stylesheet">
+	<style>
+		html 					{ overflow-y:scroll; }
+		body 					{ padding-top:50px; }
+		#word-form 	 			{ margin-bottom:50px; }
+	</style>
+
+	<!-- SPELLS -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.min.js"></script><!-- load angular 1.2.4 -->
+    <script src="js/controllers/main.js"></script> <!-- load up our controller -->
+	<script src="js/services/word.js"></script> <!-- load our words service -->
+	<script src="js/core.js"></script> <!-- load our main application -->
+
+</head>
+<!-- SET THE CONTROLLER -->
+<body ng-controller="mainController">
+	<div class="container">
+
+		<!-- FORM  -->
+		<div id="word-form" class="row">
+			<div class="col-sm-8 col-sm-offset-2 text-center">
+				<form editable-form>
+					<div class="form-group">
+					 <label ><b>{{ word.infinitive }} </b></label> <br>
+					 <label >{{ word.forms[0] || "______" }} </label> <br>
+					 <label >{{ word.forms[1] || "______" }} </label> <br>
+					 <label >{{ word.forms[2] || "______" }} </label> <br>
+                     <input type="text" class="form-control input-lg text-center" placeholder="Correct form" ng-model="word.userAnswer">
+                     <br>
+                     <button type="submit" class="btn btn-primary btn-lg" ng-click="submitWord()">Submit</button>
+					 <button type="submit" class="btn btn-primary btn-lg" ng-click="fillDatabase()">Fill database</button>
+				</form>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

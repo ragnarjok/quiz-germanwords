@@ -1,5 +1,11 @@
 var http = require("http");
 var cheerio = require("cheerio");
+var reAdditionalInfo = /aber:|ebenso|aber schwach|ungew.|veralt.|landsch./i;
+var reSquareBraces = /\[|\]/g;
+
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
 
 function download(url, callback) {
 	http.get(url, function(res) {
@@ -21,21 +27,21 @@ function parse (url, callback){
 			var $ = cheerio.load(data);
 			$("tr").each(function(i, e) {
 				var verb = $(e).find("td>b").text();
-				if (verb.indexOf(' ') === -1) {
+				if (verb.indexOf(' ') === -1 && !isNumber(verb)) {
 					var forms = [];
 					var $allForms = $(e).find("td").slice(1);
 					var index = 0;
 					$allForms.each(function(i, elem) {
 					    var textValue = $(elem).text();
 					    // there are only 3 forms possible
-						if (index < 3 && textValue != '' &&  textValue.indexOf('aber schwach') == -1 
-						&& textValue.indexOf('aber:') == -1 && textValue.indexOf('ebenso') == -1) 
+						if (index < 3 && textValue != '' &&  !reAdditionalInfo.test(textValue)) 
 						{ 
-							textValue = textValue.replace("[","").replace("]","");
+							textValue = textValue.replace(reSquareBraces, ' ');
 							forms[index] = textValue; 
 							index++;
 						} 
 					});
+					console.log(verb);
 					callback({infinitive: verb, forms : forms});
 				}					
 			});

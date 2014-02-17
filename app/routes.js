@@ -18,18 +18,20 @@ module.exports = function(app) {
 			var ind = Math.floor((Math.random() * formsCountLimit));
 			word.currentForm = ind;  
 			word.forms[ind] = "";
+
 			res.json(word);
 		} )
 	});
 
 	// checks whether user gave correct answer or not
 	app.post('/api/word', function(req, res){
-		Word.findOne({ _id: req.body.infinitive }, function(err, word) {
+		Word.findOne({ _id: req.body._id }, function(err, word) {
 			if (err)
 				res.send (err);
-			console.log(req);
-			var toCheck = req.body.currentForm;
-			if (req.body.userAnswer == word.forms[toCheck]){
+
+			var indexToCheck = req.body.currentForm;
+
+			if (req.body.userAnswer == word.forms[indexToCheck]){
 				word.score ++;
 				word.lastResult = true;
 			}  else {
@@ -37,7 +39,23 @@ module.exports = function(app) {
 				word.lastResult = false;
 			}
 			word.save (function(err, saved){
-				res.json (saved);
+				if (err)
+				{
+					res.send (err);
+				}
+				var json = saved.toObject();
+				json.classes = [];
+				if (json.lastResult)
+				{
+					json.classes[indexToCheck] = {result: "has-success"};
+				}
+				else 
+				{
+					var tmp = json.forms[indexToCheck];
+					json.forms[indexToCheck] = req.body.userAnswer;
+					json.classes[indexToCheck] = {result: "has-error", tip: tmp};
+				}
+				res.json (json);
 			})
 		});
 	});
@@ -46,7 +64,10 @@ module.exports = function(app) {
 		helper.parse(urlWiki, function(data) {
 			Word.update({ _id : data.infinitive },
 				{ $set: { forms: data.forms }},
-				{ upsert: true }
+				{ upsert: true },
+				function (err, data) {
+
+				}
 			);
 		});		
 		res.send();
@@ -54,7 +75,6 @@ module.exports = function(app) {
 
 	// application -------------------------------------------------------------
 	app.get('*', function(req, res) {
-		
-	    res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
+		res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
 	});
 };

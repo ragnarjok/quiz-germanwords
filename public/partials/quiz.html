@@ -1,0 +1,17 @@
+<div id="word-form" class="row">
+	<div class="col-sm-8 col-sm-offset-2 text-center">
+		<form>
+			<div class="form-group pure-form">
+				<label class="control-label" ><b>{{ word._id }}</b></label> <br>
+				<label ng-show=" word.forms[0] != '' " class="control-label" ng-class="{{word.classes[0].result}}">{{ word.forms[0] }} </label> 
+				<input ng-show=" word.forms[0] == '' " type="text" class="form-control input-lg text-center" placeholder="Correct form" ng-model="word.userAnswer">
+				<label ng-show=" word.forms[1] != '' " class="control-label" ng-class="{{word.classes[1].result}}">{{ word.forms[1] }} </label> 
+				<input ng-show=" word.forms[1] == '' " type="text" class="form-control input-lg text-center" placeholder="Correct form" ng-model="word.userAnswer">
+				<label ng-show=" word.forms[2] != '' " class="control-label" ng-class="{{word.classes[2].result}}">{{ word.forms[2] }} </label> 
+				<input ng-show=" word.forms[2] == '' " type="text" class="form-control input-lg text-center" placeholder="Correct form" ng-model="word.userAnswer">
+				<br>
+				<button type="submit" class="btn btn-primary btn-lg pure-button pure-button-primary" ng-click="submitWord()">Submit</button>					 
+			</form>
+		</div>
+	</div>
+</div>

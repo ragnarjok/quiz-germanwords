@@ -8,10 +8,10 @@
 	<title>Node/Angular QUIZ</title>
 	<style type="text/css"></style>
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> 
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.min.js"></script><!-- load angular 1.2.4 -->
-    <script src="js/controllers/main.js"></script> <!-- load up our controller -->
+	<script src="js/controllers/main.js"></script> <!-- load up our controller -->
 	<script src="js/services/word.js"></script> <!-- load our words service -->
 	<script src="js/core.js"></script> <!-- load our main application -->
 
@@ -19,27 +19,17 @@
 
 <body ng-controller="mainController">
 
-    
+
 	<div class="container">
 		<a href="#" ng-click="fillDatabase()">Re-fill database</a></li>
+		<div id="main">
 
-		<!-- FORM  -->
-		<div id="word-form" class="row">
-			<div class="col-sm-8 col-sm-offset-2 text-center">
-				<form>
-					<div class="form-group pure-form">
-					 <label class="control-label" ><b>{{ word._id }}</b></label> <br>
-					 <label ng-show=" word.forms[0] != '' " class="control-label" ng-class="{{word.classes[0].result}}">{{ word.forms[0] }} </label> 
-					 <input ng-show=" word.forms[0] == '' " type="text" class="form-control input-lg text-center" placeholder="Correct form" ng-model="word.userAnswer">
-					 <label ng-show=" word.forms[1] != '' " class="control-label" ng-class="{{word.classes[1].result}}">{{ word.forms[1] }} </label> 
-					 <input ng-show=" word.forms[1] == '' " type="text" class="form-control input-lg text-center" placeholder="Correct form" ng-model="word.userAnswer">
-					 <label ng-show=" word.forms[2] != '' " class="control-label" ng-class="{{word.classes[2].result}}">{{ word.forms[2] }} </label> 
-					 <input ng-show=" word.forms[2] == '' " type="text" class="form-control input-lg text-center" placeholder="Correct form" ng-model="word.userAnswer">
-                     <br>
-                     <button type="submit" class="btn btn-primary btn-lg pure-button pure-button-primary" ng-click="submitWord()">Submit</button>					 
-				</form>
-			</div>
+			<!-- angular templating -->
+			<!-- this is where content will be injected -->
+			<div ng-view></div>
+
 		</div>
+		<!-- FORM  -->
 		
 	</div>
 </body>
